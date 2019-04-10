@@ -1,0 +1,1 @@
+export PYTHON_BIN_PATH="/home/ncs/anaconda3/bin/python"
