@@ -22,6 +22,8 @@ sudo python3 ./mo_tf.py --input_meta_graph /home/ncs/Downloads/ssd_mobilenet_v1_
 
 
 
+-------------------
+AndroidCon related codes:
 
 
 python object_detection/export_tflite_ssd_graph.py --pipeline_config_path=/home/ncs/Downloads/ssdlite_mobilenet_v2_coco_2018_05_09/pipeline.config --trained_checkpoint_prefix=/home/ncs/Downloads/ssdlite_mobilenet_v2_coco_2018_05_09/model.ckpt --output_directory=/home/ncs/Desktop --add_postprocessing_op=true
