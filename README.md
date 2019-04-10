@@ -1,1 +1,1 @@
-## This repo contains all the info abou AndroidCon project
+## This repo contains all the info about AndroidCon project.
