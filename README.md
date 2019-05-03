@@ -2,7 +2,6 @@
 ---
 ## Instructions:
 
-
 ### To convert the .pb file to tflite graph, form _object_detection_ directory, run:
 
 python object_detection/export_tflite_ssd_graph.py --pipeline_config_path=/home/ncs/Downloads/ssdlite_mobilenet_v2_coco_2018_05_09/pipeline.config --trained_checkpoint_prefix=/home/ncs/Downloads/ssdlite_mobilenet_v2_coco_2018_05_09/model.ckpt --output_directory=/home/ncs/Desktop --add_postprocessing_op=true
