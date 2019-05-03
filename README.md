@@ -1,7 +1,7 @@
 # This repo contains all the info about AndroidCon project.
 ---
 ## Instructions:
-___
+
 
 ### To convert the .pb file to tflite graph, form _object_detection_ directory, run:
 
@@ -39,6 +39,7 @@ This will convert the resulting frozen graph (tflite_graph.pb) to the TensorFlow
 4. [link](https://blog.francium.tech/real-time-object-detection-on-mobile-with-flutter-tensorflow-lite-and-yolo-android-part-a0042c9b62c6)
 5. [link](http://androidkt.com/tensorflow-lite-object-detection-demo/)
 
+___
 * ToDo:
 
 Train the model with quantization.
