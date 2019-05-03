@@ -33,8 +33,11 @@ This will convert the resulting frozen graph (tflite_graph.pb) to the TensorFlow
 `adb install bazel-bin/tensorflow/contrib/lite/examples/android/tflite_demo.apk`
 
 * Useful links to learn more about object detection with tflite:
-1. [1 link](https://medium.com/tensorflow/training-and-serving-a-realtime-mobile-object-detector-in-30-minutes-with-cloud-tpus-b78971cf1193)
-2.
+1. [link](https://medium.com/tensorflow/training-and-serving-a-realtime-mobile-object-detector-in-30-minutes-with-cloud-tpus-b78971cf1193)
+2. [link](https://www.tensorflow.org/lite/models/object_detection/overview)
+3. [link](https://github.com/tensorflow/examples/tree/master/lite/examples/object_detection/android)
+4. [link](https://blog.francium.tech/real-time-object-detection-on-mobile-with-flutter-tensorflow-lite-and-yolo-android-part-a0042c9b62c6)
+5. [link](http://androidkt.com/tensorflow-lite-object-detection-demo/)
 
 * ToDo:
 
