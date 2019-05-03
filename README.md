@@ -1,4 +1,7 @@
 # This repo contains all the info about AndroidCon project.
+---
+## Instructions:
+___
 
 ### To convert the .pb file to tflite graph, form _object_detection_ directory, run:
 
@@ -29,6 +32,9 @@ This will convert the resulting frozen graph (tflite_graph.pb) to the TensorFlow
 3. to install the App in the phone:
 `adb install bazel-bin/tensorflow/contrib/lite/examples/android/tflite_demo.apk`
 
+* Useful links to learn more about object detection with tflite:
+1. [1 link](https://medium.com/tensorflow/training-and-serving-a-realtime-mobile-object-detector-in-30-minutes-with-cloud-tpus-b78971cf1193)
+2.
 
 * ToDo:
 
