@@ -16,8 +16,11 @@
 
 package org.tensorflow.demo;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -26,11 +29,16 @@ import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
+import android.net.Uri;
 import android.os.SystemClock;
+import android.os.Environment;
+import android.telephony.SmsManager;
 import android.util.Size;
 import android.util.TypedValue;
 import android.widget.Toast;
 import java.io.IOException;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -71,7 +79,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   private static final boolean SAVE_PREVIEW_BITMAP = false;
   private static final float TEXT_SIZE_DIP = 10;
-
+  // Get access to the photo gallery
+  private static final int PICK_IMAGE = 1;
+  Uri imagUri;
   private Integer sensorOrientation;
 
   private Classifier detector;
@@ -84,6 +94,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   private boolean computingDetection = false;
 
   private long timestamp = 0;
+  private long totalTimeMs = 0;
 
   private Matrix frameToCropTransform;
   private Matrix cropToFrameTransform;
@@ -93,6 +104,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   private byte[] luminanceCopy;
 
   private BorderedText borderedText;
+
   @Override
   public void onPreviewSizeChosen(final Size size, final int rotation) {
     final float textSizePx =
@@ -123,10 +135,30 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
       finish();
     }
 
+    // try to load picture from local computer
+//    BitmapFactory.Options options = new BitmapFactory.Options();
+//    options.inJustDecodeBounds = true;
+//    // path
+//      Context context = getApplicationContext();
+//      File file = context.getFilesDir();
+//      String fileName = file.getAbsolutePath();
+//      System.out.println("Current path "+fileName);
+//
+//    BitmapFactory.decodeFile("@drawable/test1.jpg", options);
+//    int testWidth = options.outWidth;
+//    int testHeight = options.outHeight;
+//    String type = options.outMimeType;
+//    System.out.println("test H "+testHeight+", test W "+testWidth+", type "+type);
+
+    // Test SMS, No SIM card yet
+//    sendSMS("6262239634", "Hello Sally");
+    // Test open picture
+    openPhotos();
+
 
     previewWidth = size.getWidth();
     previewHeight = size.getHeight();
-
+    System.out.println("PreviewHeight "+previewHeight+", previewWidth "+previewWidth);
     sensorOrientation = rotation - getScreenOrientation();
     LOGGER.i("Camera orientation relative to screen canvas: %d", sensorOrientation);
 
@@ -183,6 +215,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
               final String statString = detector.getStatString();
               final String[] statLines = statString.split("\n");
               for (final String line : statLines) {
+                LOGGER.w("what is line" + line);
                 lines.add(line);
               }
             }
@@ -249,6 +282,16 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             LOGGER.i("This is the " + results);
 
             LOGGER.i("Last processing time ms " + lastProcessingTimeMs);
+            // Write to file
+            try {
+              writeToFile(results, currTimestamp);
+            } catch (IOException e) {
+              LOGGER.i("Error in writing result to the file.");
+            }
+
+            // calculate the total time for getting the average time
+             totalTimeMs += lastProcessingTimeMs;
+            LOGGER.i("The total processing time ms  " + totalTimeMs);
 
             cropCopyBitmap = Bitmap.createBitmap(croppedBitmap);
             final Canvas canvas = new Canvas(cropCopyBitmap);
@@ -301,5 +344,53 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   @Override
   public void onSetDebug(final boolean debug) {
     detector.enableStatLogging(debug);
+  }
+
+  public void writeToFile(List<Classifier.Recognition> results, long currTimestamp) throws IOException {
+    String data = "";
+    for (Classifier.Recognition result : results) {
+      data += result.toString() + " ";
+    }
+    data = data.trim();
+
+    Context context = getApplicationContext();
+    File file = context.getFilesDir();
+    String fileName = file.getAbsolutePath() + File.separator + String.valueOf(currTimestamp)+".txt";
+    //System.out.println(fileName);
+    FileOutputStream outputFile = new FileOutputStream(fileName);
+    outputFile.write(data.getBytes());
+    outputFile.close();
+
+
+  }
+
+  public void sendSMS(String phone, String result) {
+    SmsManager sm = SmsManager.getDefault();
+    List<String> smslist = sm.divideMessage(result);
+    for (String sms : smslist) {
+      sm.sendTextMessage(phone,null,sms,null,null);
+    }
+  }
+  public void openPhotos() {
+    Uri internal_link = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    System.out.println(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI.getPath());
+    System.out.println(android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI.getPath());
+    Intent gallery = new Intent(Intent.ACTION_PICK, internal_link);
+    startActivityForResult(gallery, PICK_IMAGE);
+  }
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    System.out.println("We are here 1");
+    if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
+      imagUri = data.getData();
+      System.out.println("Image uri path " + imagUri.toString());
+      try {
+        Bitmap bit = BitmapFactory.decodeStream(getContentResolver().openInputStream(imagUri));
+        System.out.println(bit.getAllocationByteCount());
+      } catch (Exception e) {
+        LOGGER.i("Bitmap creation failed");
+      }
+    }
   }
 }
