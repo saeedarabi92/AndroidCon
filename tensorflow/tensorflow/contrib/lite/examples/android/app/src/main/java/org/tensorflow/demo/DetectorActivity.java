@@ -36,6 +36,7 @@ import android.telephony.SmsManager;
 import android.util.Size;
 import android.util.TypedValue;
 import android.widget.Toast;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -79,9 +80,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   private static final boolean SAVE_PREVIEW_BITMAP = false;
   private static final float TEXT_SIZE_DIP = 10;
-  // Get access to the photo gallery
-  private static final int PICK_IMAGE = 1;
-  Uri imagUri;
+
   private Integer sensorOrientation;
 
   private Classifier detector;
@@ -95,6 +94,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   private long timestamp = 0;
   private long totalTimeMs = 0;
+  private long pictureCounter = 0;
 
   private Matrix frameToCropTransform;
   private Matrix cropToFrameTransform;
@@ -134,27 +134,6 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
       toast.show();
       finish();
     }
-
-    // try to load picture from local computer
-//    BitmapFactory.Options options = new BitmapFactory.Options();
-//    options.inJustDecodeBounds = true;
-//    // path
-//      Context context = getApplicationContext();
-//      File file = context.getFilesDir();
-//      String fileName = file.getAbsolutePath();
-//      System.out.println("Current path "+fileName);
-//
-//    BitmapFactory.decodeFile("@drawable/test1.jpg", options);
-//    int testWidth = options.outWidth;
-//    int testHeight = options.outHeight;
-//    String type = options.outMimeType;
-//    System.out.println("test H "+testHeight+", test W "+testWidth+", type "+type);
-
-    // Test SMS, No SIM card yet
-//    sendSMS("6262239634", "Hello Sally");
-    // Test open picture
-    openPhotos();
-
 
     previewWidth = size.getWidth();
     previewHeight = size.getHeight();
@@ -230,6 +209,11 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             borderedText.drawLines(canvas, 10, canvas.getHeight() - 10, lines);
           }
         });
+
+    // Test SMS, No SIM card yet
+//    sendSMS("6262239634", "Hello Sally");
+    // Test open picture
+    openPhotos();
   }
 
   OverlayView trackingOverlay;
@@ -270,6 +254,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     if (SAVE_PREVIEW_BITMAP) {
       ImageUtils.saveBitmap(croppedBitmap);
     }
+    //saveToFile(croppedBitmap, true);
 
     runInBackground(
         new Runnable() {
@@ -371,26 +356,73 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
       sm.sendTextMessage(phone,null,sms,null,null);
     }
   }
+
   public void openPhotos() {
-    Uri internal_link = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-    System.out.println(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI.getPath());
-    System.out.println(android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI.getPath());
-    Intent gallery = new Intent(Intent.ACTION_PICK, internal_link);
-    startActivityForResult(gallery, PICK_IMAGE);
-  }
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    System.out.println("We are here 1");
-    if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
-      imagUri = data.getData();
-      System.out.println("Image uri path " + imagUri.toString());
-      try {
-        Bitmap bit = BitmapFactory.decodeStream(getContentResolver().openInputStream(imagUri));
-        System.out.println(bit.getAllocationByteCount());
-      } catch (Exception e) {
-        LOGGER.i("Bitmap creation failed");
+    String folderPath = "/sdcard/DCIM/Camera";
+    File folder = new File(folderPath);
+    List<Bitmap> testSet = new LinkedList<Bitmap>();
+    File[] files = folder.listFiles();
+    for (File f : files) {
+      String picture = folderPath + "/" + f.getName();
+      Bitmap testSample = BitmapFactory.decodeFile(picture);
+
+
+      if (testSample != null) {
+//        testSet.add(testSample);
+        System.out.println("recreate");
+        test(testSample);
+        saveToFile(testSample, false);
       }
     }
+  }
+
+  public void saveToFile(Bitmap bit, boolean isCropped) {
+    ++pictureCounter;
+    String folderPath = "/sdcard/DCIM/Camera";
+    if (!isCropped){
+      final Canvas canvas = new Canvas(croppedBitmap);
+      canvas.drawBitmap(bit, frameToCropTransform, null);
+      // For examining the actual TF input.
+      if (SAVE_PREVIEW_BITMAP) {
+        ImageUtils.saveBitmap(croppedBitmap);
+      }
+    }
+
+    File outFile = new File(folderPath, pictureCounter+".jpg");
+    try {
+      FileOutputStream out = new FileOutputStream(outFile);
+      croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+      System.out.println("cropped saved !");
+    } catch (Exception e) {
+      LOGGER.e("Cropped not saved");
+    }
+  }
+
+  public void test(Bitmap bitmap) {
+    int curWidth = bitmap.getWidth();
+    int curHeight = bitmap.getHeight();
+    System.out.println("bitmap H "+bitmap.getHeight()+", W "+bitmap.getWidth());
+    // resize the original picture
+    Matrix originToFrameTransform =
+    ImageUtils.getTransformationMatrix(
+            curWidth, curHeight,
+            previewWidth, previewHeight,
+            0, MAINTAIN_ASPECT);
+
+    Matrix frameToOriginTransform = new Matrix();
+    originToFrameTransform.invert(frameToOriginTransform);
+
+    Canvas toFrame = new Canvas(rgbFrameBitmap);
+    toFrame.drawBitmap(bitmap, originToFrameTransform, null);
+    System.out.println("bitmap H "+bitmap.getHeight()+", W "+bitmap.getWidth());
+    System.out.println("rgbmap H "+rgbFrameBitmap.getHeight()+", W "+rgbFrameBitmap.getWidth());
+    // here you also want to bitmap, one for the original, the other for the target. Now we only have one
+
+//    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//    byte[] data = baos.toByteArray();
+//
+//    int[] rbgBytes = new int[curHeight*curWidth];
+//    ImageUtils.convertYUV420SPToARGB8888(data, curWidth, curHeight, rbgBytes);
   }
 }
