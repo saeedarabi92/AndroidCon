@@ -41,6 +41,7 @@ import android.view.Surface;
 import android.view.WindowManager;
 import android.widget.Toast;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import org.tensorflow.demo.env.ImageUtils;
 import org.tensorflow.demo.env.Logger;
 import org.tensorflow.lite.demo.R; // Explicit import needed for internal Google builds.
@@ -122,11 +123,10 @@ public abstract class CameraActivity extends Activity
       LOGGER.e(e, "Exception!");
       return;
     }
-
     isProcessingFrame = true;
     yuvBytes[0] = bytes;
     yRowStride = previewWidth;
-
+    LOGGER.i("bytes length "+bytes.length+" previewW "+previewWidth+" previewH "+previewHeight+" rgbBytes length "+rgbBytes.length);
     imageConverter =
         new Runnable() {
           @Override

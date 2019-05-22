@@ -246,7 +246,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
       luminanceCopy = new byte[originalLuminance.length];
     }
     System.arraycopy(originalLuminance, 0, luminanceCopy, 0, originalLuminance.length);
-    readyForNextImage();
+    //readyForNextImage();
 
     final Canvas canvas = new Canvas(croppedBitmap);
     canvas.drawBitmap(rgbFrameBitmap, frameToCropTransform, null);
@@ -362,6 +362,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     File folder = new File(folderPath);
     List<Bitmap> testSet = new LinkedList<Bitmap>();
     File[] files = folder.listFiles();
+    System.out.println("the number of pictures: "+files.length);
     for (File f : files) {
       String picture = folderPath + "/" + f.getName();
       Bitmap testSample = BitmapFactory.decodeFile(picture);
@@ -378,7 +379,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   public void saveToFile(Bitmap bit, boolean isCropped) {
     ++pictureCounter;
-    String folderPath = "/sdcard/DCIM/Camera";
+    String folderPath = "/sdcard/DCIM/Camera/output";
     if (!isCropped){
       final Canvas canvas = new Canvas(croppedBitmap);
       canvas.drawBitmap(bit, frameToCropTransform, null);
