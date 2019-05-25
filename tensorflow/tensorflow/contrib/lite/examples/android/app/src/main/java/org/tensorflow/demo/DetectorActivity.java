@@ -104,6 +104,12 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   private byte[] luminanceCopy;
 
   private BorderedText borderedText;
+  // globals for files in folder
+  private Bitmap croppedFromFolder = null;
+  private boolean isFromFolder = false;
+  private File[] allPicture = null;
+  private int counterForFolderPicture = 0;
+  private boolean folderPicRemain = true;
 
   @Override
   public void onPreviewSizeChosen(final Size size, final int rotation) {
@@ -144,6 +150,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     LOGGER.i("Initializing at size %dx%d", previewWidth, previewHeight);
     rgbFrameBitmap = Bitmap.createBitmap(previewWidth, previewHeight, Config.ARGB_8888);
     croppedBitmap = Bitmap.createBitmap(cropSize, cropSize, Config.ARGB_8888);
+    croppedFromFolder = Bitmap.createBitmap(cropSize, cropSize, Config.ARGB_8888);
 
     frameToCropTransform =
         ImageUtils.getTransformationMatrix(
@@ -239,14 +246,19 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     }
     computingDetection = true;
     LOGGER.i("Preparing image " + currTimestamp + " for detection in bg thread.");
-
+    
     rgbFrameBitmap.setPixels(getRgbBytes(), 0, previewWidth, 0, 0, previewWidth, previewHeight);
 
     if (luminanceCopy == null) {
       luminanceCopy = new byte[originalLuminance.length];
     }
     System.arraycopy(originalLuminance, 0, luminanceCopy, 0, originalLuminance.length);
-    //readyForNextImage();
+
+    if (isFromFolder) {
+      loadPicture();
+    } else {
+      readyForNextImage();
+    }
 
     final Canvas canvas = new Canvas(croppedBitmap);
     canvas.drawBitmap(rgbFrameBitmap, frameToCropTransform, null);
@@ -262,7 +274,13 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
           public void run() {
             LOGGER.i("Running detection on image " + currTimestamp);
             final long startTime = SystemClock.uptimeMillis();
-            final List<Classifier.Recognition> results = detector.recognizeImage(croppedBitmap);
+            List<Classifier.Recognition> results = null;
+            if (isFromFolder) {
+              System.out.println("Run on picture from folder!");
+              results = detector.recognizeImage(croppedFromFolder);
+            } else {
+              results = detector.recognizeImage(croppedBitmap);
+            }
             lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
             LOGGER.i("This is the " + results);
 
@@ -278,8 +296,15 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
              totalTimeMs += lastProcessingTimeMs;
             LOGGER.i("The total processing time ms  " + totalTimeMs);
 
-            cropCopyBitmap = Bitmap.createBitmap(croppedBitmap);
-            final Canvas canvas = new Canvas(cropCopyBitmap);
+            Canvas canvas = null;
+            if (isFromFolder) {
+              cropCopyBitmap = Bitmap.createBitmap(croppedFromFolder);
+              canvas = new Canvas(croppedFromFolder);
+            } else {
+              cropCopyBitmap = Bitmap.createBitmap(croppedBitmap);
+              canvas = new Canvas(cropCopyBitmap);
+            }
+
             final Paint paint = new Paint();
             paint.setColor(Color.RED);
             paint.setStyle(Style.STROKE);
@@ -297,10 +322,21 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
             for (final Classifier.Recognition result : results) {
               final RectF location = result.getLocation();
+              System.out.println(result.toString());
               if (location != null && result.getConfidence() >= minimumConfidence) {
 		
 
                 canvas.drawRect(location, paint);
+                if (isFromFolder) {
+                  String res = result.getId() + " " + result.getTitle() + " " + String.valueOf(result.getConfidence());
+
+                  Paint paintText = new Paint();
+                  paintText.setColor(Color.RED);
+                  paintText.setTextSize(15);
+                  float x = location.left;
+                  float y = location.bottom + 15;
+                  canvas.drawText(res, x, y, paintText);
+                }
                 cropToFrameTransform.mapRect(location);
                 result.setLocation(location);
                 mappedRecognitions.add(result);
@@ -312,6 +348,12 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
             requestRender();
             computingDetection = false;
+            if (isFromFolder) {
+              saveToFile(croppedFromFolder);
+              if (folderPicRemain){
+                processImage();
+              }
+            }
           }
         });
   }
@@ -360,34 +402,42 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   public void openPhotos() {
     String folderPath = "/sdcard/DCIM/Camera";
     File folder = new File(folderPath);
-    List<Bitmap> testSet = new LinkedList<Bitmap>();
-    File[] files = folder.listFiles();
-    System.out.println("the number of pictures: "+files.length);
-    for (File f : files) {
-      String picture = folderPath + "/" + f.getName();
-      Bitmap testSample = BitmapFactory.decodeFile(picture);
-
-
-      if (testSample != null) {
-//        testSet.add(testSample);
-        System.out.println("recreate");
-        test(testSample);
-        saveToFile(testSample, false);
-      }
+    allPicture = folder.listFiles();
+    System.out.println("the number of pictures: "+allPicture.length);
+    if (allPicture.length == 0) {
+      isFromFolder = false;
+    } else {
+      isFromFolder = true;
     }
   }
 
-  public void saveToFile(Bitmap bit, boolean isCropped) {
-    ++pictureCounter;
-    String folderPath = "/sdcard/DCIM/Camera/output";
-    if (!isCropped){
-      final Canvas canvas = new Canvas(croppedBitmap);
-      canvas.drawBitmap(bit, frameToCropTransform, null);
-      // For examining the actual TF input.
-      if (SAVE_PREVIEW_BITMAP) {
-        ImageUtils.saveBitmap(croppedBitmap);
-      }
+  public void loadPicture() {
+    String folderPath = "/sdcard/DCIM/Camera";
+    File f = allPicture[counterForFolderPicture];
+    String picture = folderPath + "/" + f.getName();
+    Bitmap folderPicOrigin = BitmapFactory.decodeFile(picture);
+    if (folderPicOrigin != null) {
+      System.out.println("Folder pic process");
+      folderPicToCrop(folderPicOrigin);
+ //     saveToFile(croppedFromFolder);
     }
+    counterForFolderPicture ++;
+    if (counterForFolderPicture == allPicture.length) {
+      folderPicRemain = false;
+    }
+  }
+
+  public void saveToFile(Bitmap croppedBitmap) {
+    ++pictureCounter;
+    String folderPath = "/sdcard/DCIM/TFoutput";
+//    if (!isCropped){
+//      final Canvas canvas = new Canvas(croppedBitmap);
+//      canvas.drawBitmap(bit, frameToCropTransform, null);
+//      // For examining the actual TF input.
+//      if (SAVE_PREVIEW_BITMAP) {
+//        ImageUtils.saveBitmap(croppedBitmap);
+//      }
+//    }
 
     File outFile = new File(folderPath, pictureCounter+".jpg");
     try {
@@ -399,31 +449,10 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     }
   }
 
-  public void test(Bitmap bitmap) {
-    int curWidth = bitmap.getWidth();
-    int curHeight = bitmap.getHeight();
-    System.out.println("bitmap H "+bitmap.getHeight()+", W "+bitmap.getWidth());
-    // resize the original picture
-    Matrix originToFrameTransform =
-    ImageUtils.getTransformationMatrix(
-            curWidth, curHeight,
-            previewWidth, previewHeight,
-            0, MAINTAIN_ASPECT);
-
-    Matrix frameToOriginTransform = new Matrix();
-    originToFrameTransform.invert(frameToOriginTransform);
-
-    Canvas toFrame = new Canvas(rgbFrameBitmap);
-    toFrame.drawBitmap(bitmap, originToFrameTransform, null);
-    System.out.println("bitmap H "+bitmap.getHeight()+", W "+bitmap.getWidth());
-    System.out.println("rgbmap H "+rgbFrameBitmap.getHeight()+", W "+rgbFrameBitmap.getWidth());
-    // here you also want to bitmap, one for the original, the other for the target. Now we only have one
-
-//    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//    byte[] data = baos.toByteArray();
-//
-//    int[] rbgBytes = new int[curHeight*curWidth];
-//    ImageUtils.convertYUV420SPToARGB8888(data, curWidth, curHeight, rbgBytes);
+  public void folderPicToCrop(Bitmap bitmap) {
+    final Canvas toCrop = new Canvas(croppedFromFolder);
+    toCrop.drawBitmap(bitmap, frameToCropTransform, null);
+//    System.out.println("In folder bitmap H "+bitmap.getHeight()+", W "+bitmap.getWidth());
+//    System.out.println("In folder cropped H "+croppedFromFolder.getHeight()+", W "+croppedFromFolder.getWidth());
   }
 }

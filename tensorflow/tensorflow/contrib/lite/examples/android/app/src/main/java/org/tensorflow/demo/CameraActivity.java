@@ -126,7 +126,6 @@ public abstract class CameraActivity extends Activity
     isProcessingFrame = true;
     yuvBytes[0] = bytes;
     yRowStride = previewWidth;
-    LOGGER.i("bytes length "+bytes.length+" previewW "+previewWidth+" previewH "+previewHeight+" rgbBytes length "+rgbBytes.length);
     imageConverter =
         new Runnable() {
           @Override
