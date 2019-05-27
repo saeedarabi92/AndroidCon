@@ -40,9 +40,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
+import java.util.HashMap;
 import org.tensorflow.demo.OverlayView.DrawCallback;
 import org.tensorflow.demo.env.BorderedText;
 import org.tensorflow.demo.env.ImageUtils;
@@ -94,6 +97,10 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   private long timestamp = 0;
   private long totalTimeMs = 0;
+  private long clockCount = 0;
+  private long startClock = 0;
+  private long endClock = 0;
+  //private long pictureCounterForSaving = 0;
   private long pictureCounter = 0;
 
   private Matrix frameToCropTransform;
@@ -111,6 +118,10 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   private int counterForFolderPicture = 0;
   private boolean folderPicRemain = true;
 
+  private final String outputFolderPath = "/sdcard/DCIM/TFoutput";
+  private final String inputFolderPath = "/sdcard/DCIM/Camera";
+
+  private HashMap<String, Double> TitleConfidence = new HashMap<>();
   @Override
   public void onPreviewSizeChosen(final Size size, final int rotation) {
     final float textSizePx =
@@ -227,6 +238,13 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   @Override
   protected void processImage() {
+    endClock = SystemClock.uptimeMillis();
+    clockCount = endClock - startClock;
+    if (clockCount == 1000) {
+      System.out.println("Pictures per second "+pictureCounter);
+      startClock = endClock;
+      clockCount = 0;
+    }
     ++timestamp;
     final long currTimestamp = timestamp;
     byte[] originalLuminance = getLuminance();
@@ -246,7 +264,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     }
     computingDetection = true;
     LOGGER.i("Preparing image " + currTimestamp + " for detection in bg thread.");
-    
+
     rgbFrameBitmap.setPixels(getRgbBytes(), 0, previewWidth, 0, 0, previewWidth, previewHeight);
 
     if (luminanceCopy == null) {
@@ -266,17 +284,18 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     if (SAVE_PREVIEW_BITMAP) {
       ImageUtils.saveBitmap(croppedBitmap);
     }
-    //saveToFile(croppedBitmap, true);
 
     runInBackground(
         new Runnable() {
           @Override
           public void run() {
             LOGGER.i("Running detection on image " + currTimestamp);
+
+            ++pictureCounter;
             final long startTime = SystemClock.uptimeMillis();
             List<Classifier.Recognition> results = null;
             if (isFromFolder) {
-              System.out.println("Run on picture from folder!");
+//              System.out.println("Run on picture from folder!");
               results = detector.recognizeImage(croppedFromFolder);
             } else {
               results = detector.recognizeImage(croppedBitmap);
@@ -287,14 +306,14 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             LOGGER.i("Last processing time ms " + lastProcessingTimeMs);
             // Write to file
             try {
-              writeToFile(results, currTimestamp);
+              writeToFile(results);
             } catch (IOException e) {
               LOGGER.i("Error in writing result to the file.");
             }
 
             // calculate the total time for getting the average time
-             totalTimeMs += lastProcessingTimeMs;
-            LOGGER.i("The total processing time ms  " + totalTimeMs);
+            totalTimeMs += lastProcessingTimeMs;
+            LOGGER.i("The total average time ms  " + totalTimeMs/pictureCounter);
 
             Canvas canvas = null;
             if (isFromFolder) {
@@ -320,15 +339,35 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             final List<Classifier.Recognition> mappedRecognitions =
                 new LinkedList<Classifier.Recognition>();
 
+            // Result store
+            HashMap<String, Vector<Double>> tempRes = new HashMap<>();
+
             for (final Classifier.Recognition result : results) {
+              String curTitle = result.getTitle();
+              String titleConfidence = Double.toString(result.getConfidence());
+              Vector curInfo = null;
+
+              if (!tempRes.containsKey(curTitle)) {
+                tempRes.put(curTitle, new Vector<Double>());
+                curInfo = tempRes.get(curTitle);
+                curInfo.add(0.0);
+                curInfo.add(0.0);
+              } else {
+                curInfo = tempRes.get(curTitle);
+              }
+
+              double curConfidence = doubleAdd(curInfo.get(0).toString(), titleConfidence);
+              double curCounter = doubleAdd(curInfo.get(1).toString(), "1.0");
+              curInfo.set(0, curConfidence);
+              curInfo.set(1, curCounter);
+
               final RectF location = result.getLocation();
-              System.out.println(result.toString());
               if (location != null && result.getConfidence() >= minimumConfidence) {
 		
 
                 canvas.drawRect(location, paint);
                 if (isFromFolder) {
-                  String res = result.getId() + " " + result.getTitle() + " " + String.valueOf(result.getConfidence());
+                  String res = result.getId() + " " + curTitle + " " + String.valueOf(curConfidence);
 
                   Paint paintText = new Paint();
                   paintText.setColor(Color.RED);
@@ -342,6 +381,18 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                 mappedRecognitions.add(result);
               }
             }
+
+            for (String key : tempRes.keySet()) {
+              double pictureConfidence = doubleDivide(tempRes.get(key).get(0).toString(), tempRes.get(key).get(1).toString());
+              if (!TitleConfidence.containsKey(key)) {
+                TitleConfidence.put(key, 0.0);
+              }
+              // here the pictureConfidence is just a sum, later should be divied by the number of pictures
+              pictureConfidence = doubleAdd(Double.toString(pictureConfidence), TitleConfidence.get(key).toString());
+              TitleConfidence.put(key, pictureConfidence);
+//              System.out.println("Summary for Picture " + pictureCounter + " " + key+" "+TitleConfidence.get(key));
+            }
+
 
             tracker.trackResults(mappedRecognitions, luminanceCopy, currTimestamp);
             trackingOverlay.postInvalidate();
@@ -373,22 +424,18 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     detector.enableStatLogging(debug);
   }
 
-  public void writeToFile(List<Classifier.Recognition> results, long currTimestamp) throws IOException {
+  public void writeToFile(List<Classifier.Recognition> results) throws IOException {
     String data = "";
     for (Classifier.Recognition result : results) {
-      data += result.toString() + " ";
+      data += result.getTitle() + " " + result.getConfidence() + " " + getCoordinates(result.getLocation()) + "\n";
     }
     data = data.trim();
 
-    Context context = getApplicationContext();
-    File file = context.getFilesDir();
-    String fileName = file.getAbsolutePath() + File.separator + String.valueOf(currTimestamp)+".txt";
-    //System.out.println(fileName);
+    String fileName = outputFolderPath + File.separator + pictureCounter + ".txt";
+
     FileOutputStream outputFile = new FileOutputStream(fileName);
     outputFile.write(data.getBytes());
     outputFile.close();
-
-
   }
 
   public void sendSMS(String phone, String result) {
@@ -400,10 +447,8 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   }
 
   public void openPhotos() {
-    String folderPath = "/sdcard/DCIM/Camera";
-    File folder = new File(folderPath);
+    File folder = new File(inputFolderPath);
     allPicture = folder.listFiles();
-    System.out.println("the number of pictures: "+allPicture.length);
     if (allPicture.length == 0) {
       isFromFolder = false;
     } else {
@@ -412,14 +457,11 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   }
 
   public void loadPicture() {
-    String folderPath = "/sdcard/DCIM/Camera";
     File f = allPicture[counterForFolderPicture];
-    String picture = folderPath + "/" + f.getName();
+    String picture = inputFolderPath + File.separator + f.getName();
     Bitmap folderPicOrigin = BitmapFactory.decodeFile(picture);
     if (folderPicOrigin != null) {
-      System.out.println("Folder pic process");
       folderPicToCrop(folderPicOrigin);
- //     saveToFile(croppedFromFolder);
     }
     counterForFolderPicture ++;
     if (counterForFolderPicture == allPicture.length) {
@@ -428,18 +470,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   }
 
   public void saveToFile(Bitmap croppedBitmap) {
-    ++pictureCounter;
-    String folderPath = "/sdcard/DCIM/TFoutput";
-//    if (!isCropped){
-//      final Canvas canvas = new Canvas(croppedBitmap);
-//      canvas.drawBitmap(bit, frameToCropTransform, null);
-//      // For examining the actual TF input.
-//      if (SAVE_PREVIEW_BITMAP) {
-//        ImageUtils.saveBitmap(croppedBitmap);
-//      }
-//    }
-
-    File outFile = new File(folderPath, pictureCounter+".jpg");
+    File outFile = new File(outputFolderPath, pictureCounter+".jpg");
     try {
       FileOutputStream out = new FileOutputStream(outFile);
       croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
@@ -452,7 +483,30 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   public void folderPicToCrop(Bitmap bitmap) {
     final Canvas toCrop = new Canvas(croppedFromFolder);
     toCrop.drawBitmap(bitmap, frameToCropTransform, null);
-//    System.out.println("In folder bitmap H "+bitmap.getHeight()+", W "+bitmap.getWidth());
-//    System.out.println("In folder cropped H "+croppedFromFolder.getHeight()+", W "+croppedFromFolder.getWidth());
+  }
+
+  private static double doubleAdd(String v1, String v2) {
+    BigDecimal b1 = new BigDecimal(v1);
+    BigDecimal b2 = new BigDecimal(v2);
+
+    return b1.add(b2).doubleValue();
+  }
+
+  private static double doubleDivide(String v1, String v2) {
+    BigDecimal b1 = new BigDecimal(v1);
+    BigDecimal b2 = new BigDecimal(v2);
+
+    return b1.divide(b2, 4, RoundingMode.HALF_UP).doubleValue();
+  }
+
+  private static String getCoordinates(RectF location) {
+    String raw = location.toString();
+    raw = raw.substring(6, raw.length()-1);
+    String[] temp = raw.split(",");
+    String ans = "";
+    for (String s : temp) {
+      ans = ans + s + " ";
+    }
+    return ans.trim();
   }
 }

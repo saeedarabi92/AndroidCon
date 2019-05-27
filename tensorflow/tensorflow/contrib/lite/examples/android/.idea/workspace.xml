@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f9ff0b22-cb65-4943-b24f-e5b38c2fedb4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/CameraActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/CameraActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/DetectorActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/DetectorActivity.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,40 +61,47 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="7323" />
+          <entry key="java" value="9692" />
           <entry key="xml" value="218" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="7323" />
+          <entry key="JAVA" value="9692" />
           <entry key="XML" value="218" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="6" />
           <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.13" value="1" />
+          <entry key="project.open.time.19" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="8" />
+          <entry key="project.opened" value="9" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/DetectorActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1354">
-              <caret line="248" column="4" selection-start-line="248" selection-start-column="4" selection-end-line="248" selection-end-column="4" />
+            <state relative-caret-position="375">
+              <caret line="267" column="42" lean-forward="true" selection-start-line="267" selection-start-column="29" selection-end-line="267" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#14569#14570#0" expanded="true" />
+                <element signature="e#14630#14631#0" expanded="true" />
+                <element signature="e#14691#14692#0" expanded="true" />
+                <element signature="e#14728#14729#0" expanded="true" />
+                <element signature="e#14789#14790#0" expanded="true" />
+                <element signature="e#14832#14833#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -105,17 +110,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/Classifier.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="64" column="32" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="32" />
+            <state relative-caret-position="46">
+              <caret line="18" selection-start-line="18" selection-end-line="18" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/CameraActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2370">
-              <caret line="204" column="18" selection-start-line="204" selection-start-column="6" selection-end-line="204" selection-end-column="18" />
+            <state relative-caret-position="211">
+              <caret line="90" column="18" selection-start-line="90" selection-start-column="4" selection-end-line="90" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -139,13 +144,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>CameraConnectionFragment</find>
-      <find>convert</find>
-      <find>Here is a loop</find>
-      <find>previewH</find>
-      <find>readyForNextImage()</find>
-      <find>getRgbBytes</find>
-      <find>Initialized!</find>
       <find>getLuminance()</find>
       <find>image</find>
       <find>PreviewHeight</find>
@@ -169,6 +167,13 @@
       <find>postInferenceCallback</find>
       <find>processImage</find>
       <find>canvas</find>
+      <find>hash</find>
+      <find>writeToFile</find>
+      <find>MINIMUM_CONFIDENCE_TF_OD_API</find>
+      <find>currTimestamp</find>
+      <find>timestamp</find>
+      <find>pictureCounter</find>
+      <find>getRgbBytes</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/app/src/main/res</dir>
@@ -200,9 +205,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -312,6 +314,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -348,7 +353,7 @@
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
       <window_info id="Capture Tool" order="1" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.50087565" visible="true" weight="0.28026533" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.50087565" visible="true" weight="0.2835821" />
       <window_info id="Structure" order="3" sideWeight="0.49912435" side_tool="true" weight="0.2570481" />
       <window_info id="Build Variants" order="4" side_tool="true" />
       <window_info id="Image Layers" order="5" />
@@ -484,39 +489,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/DetectorActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1354">
-          <caret line="248" column="4" selection-start-line="248" selection-start-column="4" selection-end-line="248" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/Classifier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="64" column="32" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/CameraActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2370">
-          <caret line="204" column="18" selection-start-line="204" selection-start-column="6" selection-end-line="204" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/env/ImageUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1215">
           <caret line="100" column="46" selection-start-line="100" selection-start-column="21" selection-end-line="100" selection-end-column="46" />
           <folding>
             <element signature="e#0#11696#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/DetectorActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="267" column="42" lean-forward="true" selection-start-line="267" selection-start-column="29" selection-end-line="267" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#14569#14570#0" expanded="true" />
+            <element signature="e#14630#14631#0" expanded="true" />
+            <element signature="e#14691#14692#0" expanded="true" />
+            <element signature="e#14728#14729#0" expanded="true" />
+            <element signature="e#14789#14790#0" expanded="true" />
+            <element signature="e#14832#14833#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/Classifier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="18" selection-start-line="18" selection-end-line="18" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/CameraActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="90" column="18" selection-start-line="90" selection-start-column="4" selection-end-line="90" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
