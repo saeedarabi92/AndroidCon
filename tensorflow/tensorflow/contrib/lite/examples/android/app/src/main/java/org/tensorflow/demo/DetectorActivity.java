@@ -18,6 +18,7 @@ package org.tensorflow.demo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -29,9 +30,9 @@ import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
-import android.net.Uri;
 import android.os.SystemClock;
 import android.os.Environment;
+import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Size;
 import android.util.TypedValue;
@@ -122,6 +123,8 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   private final String inputFolderPath = "/sdcard/DCIM/Camera";
 
   private HashMap<String, Double> TitleConfidence = new HashMap<>();
+  private String user_number;
+
   @Override
   public void onPreviewSizeChosen(final Size size, final int rotation) {
     final float textSizePx =
@@ -438,11 +441,11 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     outputFile.close();
   }
 
-  public void sendSMS(String phone, String result) {
+  public void sendSMS(String result) {
     SmsManager sm = SmsManager.getDefault();
     List<String> smslist = sm.divideMessage(result);
     for (String sms : smslist) {
-      sm.sendTextMessage(phone,null,sms,null,null);
+      sm.sendTextMessage(user_number,null,sms,null,null);
     }
   }
 
@@ -508,5 +511,14 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
       ans = ans + s + " ";
     }
     return ans.trim();
+  }
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    Intent intent = getIntent();
+    String number = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+    user_number = number
+    Toast.makeText(getApplicationContext(), "The number is "+number, Toast.LENGTH_LONG).show();
   }
 }
