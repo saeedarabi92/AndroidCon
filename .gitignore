@@ -125,3 +125,6 @@ dmypy.json
 
 # files:
 .DS_Store
+
+# folders:
+preprocessing/
