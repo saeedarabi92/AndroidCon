@@ -209,6 +209,8 @@ public class TFLiteObjectDetectionAPIModel implements Classifier {
       // in label file and class labels start from 1 to number_of_classes+1,
       // while outputClasses correspond to class index from 0 to number_of_classes
       int labelOffset = 1;
+      System.out.println("labels"+ labels.size());
+      System.out.println((int) outputClasses[0][i] + labelOffset);
       recognitions.add(
           new Recognition(
               "" + i,

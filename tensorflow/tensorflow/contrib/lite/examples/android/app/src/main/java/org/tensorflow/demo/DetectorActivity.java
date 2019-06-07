@@ -18,6 +18,7 @@ package org.tensorflow.demo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.widget.Toast;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -30,10 +31,13 @@ import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
+import android.Manifest;
 import android.os.SystemClock;
 import android.os.Environment;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+//import android.support.v4.app.ActivityCompat;
+
 import android.util.Size;
 import android.util.TypedValue;
 import android.widget.Toast;
@@ -292,9 +296,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
         new Runnable() {
           @Override
           public void run() {
-            LOGGER.i("Running detection on image " + currTimestamp);
-
             ++pictureCounter;
+            LOGGER.i("Running detection on image " + pictureCounter);
+
             final long startTime = SystemClock.uptimeMillis();
             List<Classifier.Recognition> results = null;
             if (isFromFolder) {
@@ -306,7 +310,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
             LOGGER.i("This is the " + results);
 
-            LOGGER.i("Last processing time ms " + lastProcessingTimeMs);
+//            LOGGER.i("Last processing time ms " + lastProcessingTimeMs);
             // Write to file
             try {
               writeToFile(results);
@@ -393,7 +397,13 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
               // here the pictureConfidence is just a sum, later should be divied by the number of pictures
               pictureConfidence = doubleAdd(Double.toString(pictureConfidence), TitleConfidence.get(key).toString());
               TitleConfidence.put(key, pictureConfidence);
-//              System.out.println("Summary for Picture " + pictureCounter + " " + key+" "+TitleConfidence.get(key));
+
+              // HERE WILL NEED A THRESHOLD TO DETERMINE WHEN THE MESSAGE SHOULD SEND
+              // sendSMS(key)
+              if (pictureCounter== 3) {
+                sendSMS("All the testset is done!");
+              }
+              System.out.println("Summary for Picture " + pictureCounter + " " + key+" "+TitleConfidence.get(key)/pictureCounter);
             }
 
 
@@ -442,10 +452,26 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   }
 
   public void sendSMS(String result) {
-    SmsManager sm = SmsManager.getDefault();
-    List<String> smslist = sm.divideMessage(result);
-    for (String sms : smslist) {
-      sm.sendTextMessage(user_number,null,sms,null,null);
+//    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+//      LOGGER.i("PLAYGROUND", "Permission is not granted, requesting");
+//      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 123);
+//    } else {
+//      LOGGER.i("PLAYGROUND", "Permission is granted");
+//    }
+
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    if (requestCode == 123) {
+      if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        LOGGER.i("PLAYGROUND", "Permission has been granted");
+        SmsManager sm = SmsManager.getDefault();
+        sm.sendTextMessage(user_number,null,"This is a test of permission",null,null);
+        Toast.makeText(getApplicationContext(), "Text send", Toast.LENGTH_LONG).show();
+      } else {
+        LOGGER.i("PLAYGROUND", "Permission has been denied or request cancelled");
+      }
     }
   }
 
@@ -518,7 +544,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     super.onCreate(savedInstanceState);
     Intent intent = getIntent();
     String number = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-    user_number = number
+    user_number = number;
     Toast.makeText(getApplicationContext(), "The number is "+number, Toast.LENGTH_LONG).show();
   }
 }
