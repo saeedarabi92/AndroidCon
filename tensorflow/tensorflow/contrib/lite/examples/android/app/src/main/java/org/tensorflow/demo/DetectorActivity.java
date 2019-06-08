@@ -18,6 +18,7 @@ package org.tensorflow.demo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.widget.Toast;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -29,10 +30,12 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.Manifest;
 import android.media.ImageReader.OnImageAvailableListener;
 import android.os.SystemClock;
-import android.os.Environment;
+//import android.os.Environment;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.SmsManager;
 import android.util.Size;
 import android.util.TypedValue;
@@ -54,6 +57,7 @@ import org.tensorflow.demo.env.Logger;
 import org.tensorflow.demo.tracking.MultiBoxTracker;
 import org.tensorflow.lite.demo.R; // Explicit import needed for internal Google builds.
 
+import static android.Manifest.permission.SEND_SMS;
 /**
  * An activity that uses a TensorFlowMultiBoxDetector and ObjectTracker to detect and then track
  * objects.
@@ -124,6 +128,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   private HashMap<String, Double> TitleConfidence = new HashMap<>();
   private String user_number;
+  private static final int MY_PERMISSION_REQUEST_SEND_SMS = 1;
 
   @Override
   public void onPreviewSizeChosen(final Size size, final int rotation) {
@@ -392,7 +397,11 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
               }
               // here the pictureConfidence is just a sum, later should be divied by the number of pictures
               pictureConfidence = doubleAdd(Double.toString(pictureConfidence), TitleConfidence.get(key).toString());
-              TitleConfidence.put(key, pictureConfidence);
+              TitleConfidence.put(key, pictureConfidence/pictureCounter);
+              if (pictureConfidence/pictureCounter > 0.3) {
+                System.out.println(key+" "+pictureConfidence/pictureCounter);
+                sendSMS(key);
+              }
 //              System.out.println("Summary for Picture " + pictureCounter + " " + key+" "+TitleConfidence.get(key));
             }
 
@@ -443,11 +452,21 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   public void sendSMS(String result) {
     SmsManager sm = SmsManager.getDefault();
-    List<String> smslist = sm.divideMessage(result);
-    for (String sms : smslist) {
+    String sms = result + " is detected!";
+
+//    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//    intent.putExtra(EXTRA_MESSAGE, sms);
+//    startActivity(intent);
+
+
+    try {
       sm.sendTextMessage(user_number,null,sms,null,null);
+      Toast.makeText(getApplicationContext(), "SMS Sent Successfully!", Toast.LENGTH_SHORT).show();
+    } catch (Exception e) {
+      Toast.makeText(getApplicationContext(), "SMS Failed to Sent.", Toast.LENGTH_SHORT).show();
     }
   }
+
 
   public void openPhotos() {
     File folder = new File(inputFolderPath);
@@ -518,7 +537,15 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     super.onCreate(savedInstanceState);
     Intent intent = getIntent();
     String number = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-    user_number = number
+    user_number = number;
     Toast.makeText(getApplicationContext(), "The number is "+number, Toast.LENGTH_LONG).show();
+
+    int permissionCode = 1;
+    String[] permission = {Manifest.permission.SEND_SMS};
+    if (ActivityCompat.checkSelfPermission(this, permission[0]) != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(this, permission, permissionCode);
+    }
   }
+
+
 }

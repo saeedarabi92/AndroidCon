@@ -23,6 +23,8 @@ cc_library(
     ],
 )
 
+load("@gmaven_rules//:defs.bzl", "gmaven_artifact")
+
 android_binary(
     name = "tflite_demo",
     srcs = glob([
@@ -56,5 +58,8 @@ assets = [
     deps = [
         ":tensorflow_native_libs",
         "//tensorflow/contrib/lite/java:tensorflowlite",
+        gmaven_artifact("com.android.support:appcompat-v7:aar:27.1.1"),
+        gmaven_artifact("com.android.support:support-v4:aar:28.0.0"),
+        gmaven_artifact("com.android.support:support-compat:aar:28.0.0"),
     ],
 )
