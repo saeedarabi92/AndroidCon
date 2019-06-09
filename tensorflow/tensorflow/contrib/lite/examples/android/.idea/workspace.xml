@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="51449381-750a-4208-b08d-d489e5902c67" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../../../WORKSPACE" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../WORKSPACE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="51449381-750a-4208-b08d-d489e5902c67" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +72,7 @@
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="10" />
+          <entry key="project.closed" value="11" />
           <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.13" value="2" />
@@ -96,47 +93,25 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/DetectorActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="545" column="74" selection-start-line="545" selection-start-column="74" selection-end-line="545" selection-end-column="74" />
+            <state relative-caret-position="-14">
+              <caret line="39" selection-start-line="39" selection-end-line="39" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#15285#15286#0" expanded="true" />
+                <element signature="e#15346#15347#0" expanded="true" />
+                <element signature="e#15407#15408#0" expanded="true" />
+                <element signature="e#15444#15445#0" expanded="true" />
+                <element signature="e#15505#15506#0" expanded="true" />
+                <element signature="e#15548#15549#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/MainActivity.java">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="31" selection-start-line="31" selection-end-line="34" selection-end-column="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/CameraActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4590">
-              <caret line="352" column="16" selection-start-line="352" selection-start-column="16" selection-end-line="352" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="645">
-              <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
+            <state relative-caret-position="241">
+              <caret line="31" column="20" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -198,18 +173,18 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="76" />
+    <option name="x" value="69" />
     <option name="y" value="44" />
     <option name="width" value="1851" />
     <option name="height" value="907" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator currentView="PackagesPane" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -287,7 +262,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -325,12 +299,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="76" y="44" width="1851" height="907" extended-state="0" />
+    <frame x="65" y="-4" width="1855" height="979" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
       <window_info id="Capture Tool" order="1" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49823737" visible="true" weight="0.25595567" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49823737" visible="true" weight="0.19900498" />
       <window_info id="Structure" order="3" sideWeight="0.5017626" side_tool="true" weight="0.17634052" />
       <window_info id="Build Variants" order="4" side_tool="true" />
       <window_info id="Image Layers" order="5" />
@@ -560,13 +534,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -609,12 +576,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="31" column="20" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/DetectorActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="545" column="74" selection-start-line="545" selection-start-column="74" selection-end-line="545" selection-end-column="74" />
+        <state relative-caret-position="-14">
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#15285#15286#0" expanded="true" />
+            <element signature="e#15346#15347#0" expanded="true" />
+            <element signature="e#15407#15408#0" expanded="true" />
+            <element signature="e#15444#15445#0" expanded="true" />
+            <element signature="e#15505#15506#0" expanded="true" />
+            <element signature="e#15548#15549#0" expanded="true" />
           </folding>
         </state>
       </provider>
