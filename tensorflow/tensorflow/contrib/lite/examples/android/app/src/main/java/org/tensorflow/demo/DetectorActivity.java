@@ -132,6 +132,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   @Override
   public void onPreviewSizeChosen(final Size size, final int rotation) {
+    openPhotos();
     final float textSizePx =
         TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, TEXT_SIZE_DIP, getResources().getDisplayMetrics());
@@ -164,6 +165,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     previewHeight = size.getHeight();
     System.out.println("PreviewHeight "+previewHeight+", previewWidth "+previewWidth);
     sensorOrientation = rotation - getScreenOrientation();
+    if (isFromFolder) {
+      sensorOrientation = 0;
+    }
     LOGGER.i("Camera orientation relative to screen canvas: %d", sensorOrientation);
 
     LOGGER.i("Initializing at size %dx%d", previewWidth, previewHeight);
@@ -235,11 +239,6 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             borderedText.drawLines(canvas, 10, canvas.getHeight() - 10, lines);
           }
         });
-
-    // Test SMS, No SIM card yet
-//    sendSMS("6262239634", "Hello Sally");
-    // Test open picture
-    openPhotos();
   }
 
   OverlayView trackingOverlay;
@@ -351,8 +350,11 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             HashMap<String, Vector<Double>> tempRes = new HashMap<>();
 
             for (final Classifier.Recognition result : results) {
+              // For detection with so small confidence, we skip it when calculating the final confidence
+              if (result.getConfidence() < 0.1) {continue;}
               String curTitle = result.getTitle();
               String titleConfidence = Double.toString(result.getConfidence());
+              System.out.println(curTitle + " "+titleConfidence);
               Vector curInfo = null;
 
               if (!tempRes.containsKey(curTitle)) {
@@ -398,7 +400,8 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
               // here the pictureConfidence is just a sum, later should be divied by the number of pictures
               pictureConfidence = doubleAdd(Double.toString(pictureConfidence), TitleConfidence.get(key).toString());
               TitleConfidence.put(key, pictureConfidence/pictureCounter);
-              if (pictureConfidence/pictureCounter > 0.3) {
+              // Threshold needs to be changed
+              if (pictureConfidence/pictureCounter > 0.5) {
                 System.out.println(key+" "+pictureConfidence/pictureCounter);
                 sendSMS(key);
               }
@@ -437,27 +440,36 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   }
 
   public void writeToFile(List<Classifier.Recognition> results) throws IOException {
+    String filename = getOutputFileName();
+
     String data = "";
     for (Classifier.Recognition result : results) {
       data += result.getTitle() + " " + result.getConfidence() + " " + getCoordinates(result.getLocation()) + "\n";
     }
     data = data.trim();
 
-    String fileName = outputFolderPath + File.separator + pictureCounter + ".txt";
+    String fileName = outputFolderPath + File.separator + filename + ".txt";
 
     FileOutputStream outputFile = new FileOutputStream(fileName);
     outputFile.write(data.getBytes());
     outputFile.close();
   }
 
+  private String getOutputFileName () {
+    String filename = "";
+    if (isFromFolder) {
+      String originalName = allPicture[counterForFolderPicture-1].getName();
+      int index = originalName.indexOf(".");
+      filename = originalName.substring(0, index);
+    } else {
+      filename = String.valueOf(pictureCounter);
+    }
+    return filename;
+  }
+
   public void sendSMS(String result) {
     SmsManager sm = SmsManager.getDefault();
     String sms = result + " is detected!";
-
-//    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//    intent.putExtra(EXTRA_MESSAGE, sms);
-//    startActivity(intent);
-
 
     try {
       sm.sendTextMessage(user_number,null,sms,null,null);
@@ -492,11 +504,13 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   }
 
   public void saveToFile(Bitmap croppedBitmap) {
-    File outFile = new File(outputFolderPath, pictureCounter+".jpg");
+    String filename = getOutputFileName();
+
+    File outFile = new File(outputFolderPath, filename+"_output.jpg");
     try {
       FileOutputStream out = new FileOutputStream(outFile);
       croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-      System.out.println("cropped saved !");
+//      System.out.println("cropped saved !");
     } catch (Exception e) {
       LOGGER.e("Cropped not saved");
     }
