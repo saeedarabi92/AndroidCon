@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="51449381-750a-4208-b08d-d489e5902c67" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../../../../preprocessing/test_image/10-kitty-litter-leded.w700.h700.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../../../../preprocessing/test_image/kitty-551554_960_720.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../../../../preprocessing/test_img_preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../preprocessing/test_img_preprocess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="51449381-750a-4208-b08d-d489e5902c67" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +41,7 @@
           <entry key="BUILD" value="4" />
           <entry key="class" value="1" />
           <entry key="gradle" value="7" />
-          <entry key="java" value="26" />
+          <entry key="java" value="28" />
           <entry key="tflite" value="1" />
           <entry key="txt" value="9" />
           <entry key="xml" value="15" />
@@ -56,7 +51,7 @@
         <counts>
           <entry key="CLASS" value="1" />
           <entry key="Groovy" value="7" />
-          <entry key="JAVA" value="26" />
+          <entry key="JAVA" value="28" />
           <entry key="PLAIN_TEXT" value="14" />
           <entry key="XML" value="15" />
         </counts>
@@ -64,13 +59,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="BUILD" value="197" />
-          <entry key="java" value="12999" />
+          <entry key="java" value="13210" />
           <entry key="xml" value="1030" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="12999" />
+          <entry key="JAVA" value="13210" />
           <entry key="PLAIN_TEXT" value="197" />
           <entry key="XML" value="1030" />
         </counts>
@@ -89,8 +84,9 @@
           <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="18" />
+          <entry key="project.opened" value="19" />
         </counts>
       </usages-collector>
     </session>
@@ -100,17 +96,35 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/DetectorActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="168" column="28" selection-start-line="168" selection-start-column="28" selection-end-line="168" selection-end-column="28" />
+            <state relative-caret-position="495">
+              <caret line="380" column="106" selection-start-line="380" selection-start-column="106" selection-end-line="380" selection-end-column="106" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#15506#15507#0" expanded="true" />
-                <element signature="e#15567#15568#0" expanded="true" />
-                <element signature="e#15628#15629#0" expanded="true" />
-                <element signature="e#15665#15666#0" expanded="true" />
-                <element signature="e#15726#15727#0" expanded="true" />
-                <element signature="e#15769#15770#0" expanded="true" />
+                <element signature="e#15424#15425#0" expanded="true" />
+                <element signature="e#15485#15486#0" expanded="true" />
+                <element signature="e#15546#15547#0" expanded="true" />
+                <element signature="e#15583#15584#0" expanded="true" />
+                <element signature="e#15644#15645#0" expanded="true" />
+                <element signature="e#15687#15688#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/CameraConnectionFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="291">
+              <caret line="290" column="81" lean-forward="true" selection-start-line="290" selection-start-column="81" selection-end-line="290" selection-end-column="81" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/CameraActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-791">
+              <caret line="352" column="16" selection-start-line="352" selection-start-column="16" selection-end-line="352" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -119,8 +133,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>computingDetection</find>
-      <find>readyForNextImage</find>
       <find>croppedBitmap</find>
       <find>SAVE_PREVIEW_BITMAP</find>
       <find>requestRender</find>
@@ -128,7 +140,6 @@
       <find>processImage</find>
       <find>canvas</find>
       <find>hash</find>
-      <find>writeToFile</find>
       <find>MINIMUM_CONFIDENCE_TF_OD_API</find>
       <find>currTimestamp</find>
       <find>timestamp</find>
@@ -141,7 +152,6 @@
       <find>main</find>
       <find>sendSMS</find>
       <find>openPhotos</find>
-      <find>saveToFile</find>
       <find>counterForFolderPicture</find>
       <find>saveto</find>
       <find>writeT</find>
@@ -149,6 +159,10 @@
       <find>croppedFromFolder</find>
       <find>frameToCropTransform</find>
       <find>isFromFolder</find>
+      <find>exactSizeFound</find>
+      <find>getOutputFileName</find>
+      <find>saveToFile</find>
+      <find>writeToFile</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/app/src/main/res</dir>
@@ -172,8 +186,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="69" />
-    <option name="y" value="47" />
+    <option name="x" value="347" />
+    <option name="y" value="56" />
     <option name="width" value="1851" />
     <option name="height" value="907" />
   </component>
@@ -183,9 +197,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -305,11 +319,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="101" y="47" width="1851" height="907" extended-state="0" />
+    <frame x="347" y="56" width="1851" height="907" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
       <window_info id="Capture Tool" order="1" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49823737" visible="true" weight="0.20997229" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49823737" visible="true" weight="0.21218836" />
       <window_info id="Structure" order="3" sideWeight="0.5017626" side_tool="true" weight="0.17634052" />
       <window_info id="Build Variants" order="4" side_tool="true" />
       <window_info id="Image Layers" order="5" />
@@ -418,13 +433,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="21" column="24" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/CameraConnectionFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="373" column="51" selection-start-line="373" selection-start-column="51" selection-end-line="373" selection-end-column="51" />
         </state>
       </provider>
     </entry>
@@ -546,13 +554,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/CameraActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4590">
-          <caret line="352" column="16" selection-start-line="352" selection-start-column="16" selection-end-line="352" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="645">
@@ -588,18 +589,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/CameraConnectionFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="290" column="81" lean-forward="true" selection-start-line="290" selection-start-column="81" selection-end-line="290" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/CameraActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-791">
+          <caret line="352" column="16" selection-start-line="352" selection-start-column="16" selection-end-line="352" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/tensorflow/demo/DetectorActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="168" column="28" selection-start-line="168" selection-start-column="28" selection-end-line="168" selection-end-column="28" />
+        <state relative-caret-position="495">
+          <caret line="380" column="106" selection-start-line="380" selection-start-column="106" selection-end-line="380" selection-end-column="106" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#15506#15507#0" expanded="true" />
-            <element signature="e#15567#15568#0" expanded="true" />
-            <element signature="e#15628#15629#0" expanded="true" />
-            <element signature="e#15665#15666#0" expanded="true" />
-            <element signature="e#15726#15727#0" expanded="true" />
-            <element signature="e#15769#15770#0" expanded="true" />
+            <element signature="e#15424#15425#0" expanded="true" />
+            <element signature="e#15485#15486#0" expanded="true" />
+            <element signature="e#15546#15547#0" expanded="true" />
+            <element signature="e#15583#15584#0" expanded="true" />
+            <element signature="e#15644#15645#0" expanded="true" />
+            <element signature="e#15687#15688#0" expanded="true" />
           </folding>
         </state>
       </provider>

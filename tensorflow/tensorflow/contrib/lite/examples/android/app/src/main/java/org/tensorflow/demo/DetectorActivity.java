@@ -304,6 +304,12 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             if (isFromFolder) {
 //              System.out.println("Run on picture from folder!");
               results = detector.recognizeImage(croppedFromFolder);
+              // Write to file
+              try {
+                writeToFile(results);
+              } catch (IOException e) {
+                LOGGER.i("Error in writing result to the file.");
+              }
             } else {
               results = detector.recognizeImage(croppedBitmap);
             }
@@ -311,12 +317,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             LOGGER.i("This is the " + results);
 
             LOGGER.i("Last processing time ms " + lastProcessingTimeMs);
-            // Write to file
-            try {
-              writeToFile(results);
-            } catch (IOException e) {
-              LOGGER.i("Error in writing result to the file.");
-            }
+
 
             // calculate the total time for getting the average time
             totalTimeMs += lastProcessingTimeMs;
@@ -347,29 +348,29 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                 new LinkedList<Classifier.Recognition>();
 
             // Result store
-            HashMap<String, Vector<Double>> tempRes = new HashMap<>();
+            HashMap<String, Double> tempRes = new HashMap<>();
 
             for (final Classifier.Recognition result : results) {
-              // For detection with so small confidence, we skip it when calculating the final confidence
-              if (result.getConfidence() < 0.1) {continue;}
               String curTitle = result.getTitle();
-              String titleConfidence = Double.toString(result.getConfidence());
+              double titleConfidence = result.getConfidence();
               System.out.println(curTitle + " "+titleConfidence);
-              Vector curInfo = null;
+//              Vector curInfo = null;
 
               if (!tempRes.containsKey(curTitle)) {
-                tempRes.put(curTitle, new Vector<Double>());
-                curInfo = tempRes.get(curTitle);
-                curInfo.add(0.0);
-                curInfo.add(0.0);
+                tempRes.put(curTitle, titleConfidence);
+//                curInfo = tempRes.get(curTitle);
+//                curInfo.add(0.0);
+//                curInfo.add(0.0);
               } else {
-                curInfo = tempRes.get(curTitle);
+                if (titleConfidence > tempRes.get(curTitle)) {
+                  tempRes.put(curTitle, titleConfidence);
+                }
               }
 
-              double curConfidence = doubleAdd(curInfo.get(0).toString(), titleConfidence);
-              double curCounter = doubleAdd(curInfo.get(1).toString(), "1.0");
-              curInfo.set(0, curConfidence);
-              curInfo.set(1, curCounter);
+//              double curConfidence = doubleAdd(curInfo.get(0).toString(), titleConfidence);
+//              double curCounter = doubleAdd(curInfo.get(1).toString(), "1.0");
+//              curInfo.set(0, curConfidence);
+//              curInfo.set(1, curCounter);
 
               final RectF location = result.getLocation();
               if (location != null && result.getConfidence() >= minimumConfidence) {
@@ -377,7 +378,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
                 canvas.drawRect(location, paint);
                 if (isFromFolder) {
-                  String res = result.getId() + " " + curTitle + " " + String.valueOf(curConfidence);
+                  String res = result.getId() + " " + curTitle + " " + String.valueOf(tempRes.get(curTitle));
 
                   Paint paintText = new Paint();
                   paintText.setColor(Color.RED);
@@ -393,7 +394,8 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             }
 
             for (String key : tempRes.keySet()) {
-              double pictureConfidence = doubleDivide(tempRes.get(key).get(0).toString(), tempRes.get(key).get(1).toString());
+              double pictureConfidence = tempRes.get(key);
+//              double pictureConfidence = doubleDivide(tempRes.get(key).get(0).toString(), tempRes.get(key).get(1).toString());
               if (!TitleConfidence.containsKey(key)) {
                 TitleConfidence.put(key, 0.0);
               }
@@ -483,7 +485,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   public void openPhotos() {
     File folder = new File(inputFolderPath);
     allPicture = folder.listFiles();
-    if (allPicture.length == 0) {
+    if (allPicture == null || allPicture.length == 0) {
       isFromFolder = false;
     } else {
       isFromFolder = true;
@@ -510,7 +512,6 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     try {
       FileOutputStream out = new FileOutputStream(outFile);
       croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-//      System.out.println("cropped saved !");
     } catch (Exception e) {
       LOGGER.e("Cropped not saved");
     }
@@ -559,7 +560,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     if (ActivityCompat.checkSelfPermission(this, permission[0]) != PackageManager.PERMISSION_GRANTED) {
       ActivityCompat.requestPermissions(this, permission, permissionCode);
     }
+    File tfOutputFolder = new File(outputFolderPath);
+    if (!tfOutputFolder.exists()) {
+      tfOutputFolder.mkdir();
+    }
   }
-
-
 }
