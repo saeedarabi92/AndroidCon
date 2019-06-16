@@ -1,0 +1,29 @@
+item {
+  id: 1
+  name: 'roller'
+}
+
+item {
+  id: 2
+  name: 'mixertruck'
+}
+
+item {
+  id: 3
+  name: 'loader'
+}
+
+item {
+  id: 4
+  name: 'dumptruck'
+}
+
+item {
+  id: 5
+  name: 'grader'
+}
+
+item {
+  id: 6
+  name: 'excavator'
+}
