@@ -1,0 +1,119 @@
+
+{
+	"buildFiles" : 
+	[
+		"/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/CMakeLists.txt"
+	],
+	"cleanCommands" : 
+	[
+		"/home/ncs/Android/Sdk/cmake/3.6.4111459/bin/cmake --build /home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a --target clean"
+	],
+	"cppFileExtensions" : [ "cc" ],
+	"libraries" : 
+	{
+		"tensorflow_demo-Release-armeabi-v7a" : 
+		{
+			"abi" : "armeabi-v7a",
+			"artifactName" : "tensorflow_demo",
+			"buildCommand" : "/home/ncs/Android/Sdk/cmake/3.6.4111459/bin/cmake --build /home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a --target tensorflow_demo",
+			"buildType" : "release",
+			"files" : 
+			[
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/imageutils_jni.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/object_tracking/frame_pair.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/object_tracking/image_neon.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/object_tracking/keypoint_detector.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/object_tracking/logging.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/object_tracking/object_detector.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/object_tracking/object_tracker.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/object_tracking/object_tracker_jni.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/object_tracking/optical_flow.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/object_tracking/time_log.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/object_tracking/tracked_object.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/object_tracking/utils_neon.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/rgb2yuv.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				},
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dtensorflow_demo_EXPORTS -I/home/ncs/Downloads/github/tensorflow -I/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -mfloat-abi=softfp -mfpu=neon -DSTANDALONE_DEMO_LIB                     -std=c++11 -fno-exceptions -fno-rtti -O2 -Wno-narrowing                     -fPIE -Oz -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/jni/yuv2rgb.cc",
+					"workingDirectory" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/.externalNativeBuild/cmake/release/armeabi-v7a"
+				}
+			],
+			"output" : "/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/gradleBuild/intermediates/cmake/release/obj/armeabi-v7a/libtensorflow_demo.so",
+			"toolchain" : "3768346590852650776"
+		}
+	},
+	"toolchains" : 
+	{
+		"3768346590852650776" : 
+		{
+			"cCompilerExecutable" : "/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang",
+			"cppCompilerExecutable" : "/home/ncs/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++"
+		}
+	}
+}

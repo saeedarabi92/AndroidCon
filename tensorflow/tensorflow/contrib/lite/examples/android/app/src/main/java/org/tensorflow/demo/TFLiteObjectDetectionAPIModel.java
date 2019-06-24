@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Vector;
 import org.tensorflow.demo.env.Logger;
 import org.tensorflow.lite.Interpreter;
+import java.io.File;
 
 /**
  * Wrapper for frozen detection models trained using the Tensorflow Object Detection API:

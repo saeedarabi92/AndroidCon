@@ -1,0 +1,4 @@
+#Mon Jun 24 13:34:00 CDT 2019
+base.0=/home/ncs/Downloads/github/tensorflow/tensorflow/examples/android/gradleBuild/intermediates/transforms/dexMerger/debug/2
+path.0=classes.dex
+renamed.0=classes.dex

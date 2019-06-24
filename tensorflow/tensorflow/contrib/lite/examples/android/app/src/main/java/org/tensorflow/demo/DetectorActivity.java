@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
+import java.io.File;
 import org.tensorflow.demo.OverlayView.DrawCallback;
 import org.tensorflow.demo.env.BorderedText;
 import org.tensorflow.demo.env.ImageUtils;
@@ -50,9 +51,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
   // Configuration values for the prepackaged SSD model.
   private static final int TF_OD_API_INPUT_SIZE = 300;
-  private static final boolean TF_OD_API_IS_QUANTIZED = true;
-  private static final String TF_OD_API_MODEL_FILE = "detect.tflite";
-  private static final String TF_OD_API_LABELS_FILE = "file:///android_asset/pets_labels_list.txt";
+  private static final boolean TF_OD_API_IS_QUANTIZED = false;
+  private static final String TF_OD_API_MODEL_FILE = "file:///android_asset/frozen_inference_graph.pb";
+  private static final String TF_OD_API_LABELS_FILE = "file:///android_asset/conv_labels_list.txt";
   
   // Which detection model to use: by default uses Tensorflow Object Detection API frozen
   // checkpoints.
